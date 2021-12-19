@@ -1,6 +1,4 @@
-import './style.css';
 import 'phaser';
-
 const canvas = document.getElementById('app');
 
 var config = {
@@ -23,3 +21,9 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+
+
+function preload(){
+    this.load.image('Asteroid','/assets/asteroid.png');
+
+}
