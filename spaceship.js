@@ -63,10 +63,10 @@ export default class Spaceship {
             this.sprite.setAngularVelocity(0);
         }
     
-        // if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
-        // {
-        //     fireBullet();
-        // }
+        if (this.cursors.space.isDown)
+        {
+            fireBullet();
+        }
 
         this.game.physics.world.wrap(this.sprite, 32);
     
