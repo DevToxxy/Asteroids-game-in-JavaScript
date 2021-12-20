@@ -1,4 +1,5 @@
 import 'phaser';
+import Asteroid from 'asteroid.js'
 const canvas = document.getElementById('app');
 
 var config = {
@@ -22,6 +23,7 @@ var config = {
 
 var game = new Phaser.Game(config);
 var asteroidsGroup, asteroidsArray;
+var asteroidCreationTimer;
 
 function preload(){
     
@@ -32,6 +34,18 @@ function preload(){
 function create(){
     asteroidsArray = [];
     asteroidsGroup = this.physics.add.group();
+
+    this.physics.add.collider(ship, asteroidsGroup);
+    this.physics.add.collider(asteroidsGroup, asteroidsGroup, asteroidAsteroidCollision,null,this);
+
+    asteroidCreationTimer = scene.time.addEvent({
+        delay: 1000,                
+        callback: createAsteroid(),
+        callbackScope: this,
+        loop: true
+    });
+    asteroidsGroup.
+    
 }
 
 function update(){
@@ -41,7 +55,17 @@ function update(){
 
 function createAsteroid(){
     let asteroid = new Asteroid(scene,0,0,'asteroid');
-    this.asteroidArray.push(asteroid);
-    this.asteroids.
+    this.asteroidsArray.push(asteroid);
+    this.asteroidsGroup.add(asteroid,true);
+}
+
+function shipAsteroidCollision(asteroid, ship){
+    asteroid.setBounce(0,0);
+}
+
+function asteroidAsteroidCollision(asteroid1, asteroid2){
+    asteroid1.setBounce(1,1);
+    asteroid2.setBounce(1,1);
+
 }
 
