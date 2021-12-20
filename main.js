@@ -1,25 +1,17 @@
-import './style.css';
-import 'phaser';
-
-const canvas = document.getElementById('app');
+import MainScene from "./scenes/mainScene.js"
 
 var config = {
-    type: Phaser.AUTO,
-    parent: canvas,
     width: 800,
     height: 600,
+    type: Phaser.AUTO,
     physics: {
-        default: 'arcade',
+        default: "arcade",
         arcade: {
             fps: 60,
             gravity: { y: 0 }
         }
     },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
+    scene: [MainScene]
 };
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config)
