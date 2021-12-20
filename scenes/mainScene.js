@@ -29,11 +29,13 @@ export default class MainScene extends Phaser.Scene {
 
 
         this.createAsteroidEvent = this.time.addEvent({
-            delay: 2000,
+            delay: 5000,
             callback: this.createAsteroid,
             callbackScope: this,
             loop: true
         });
+
+        this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
 
         console.log(this.asteroidsGroup);
 
@@ -53,4 +55,5 @@ export default class MainScene extends Phaser.Scene {
         this.asteroidsGroup.add(asteroid,true);
         this.asteroidsArray.push(asteroid);
     }
+
 }
