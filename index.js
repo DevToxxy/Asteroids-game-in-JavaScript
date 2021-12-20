@@ -44,7 +44,6 @@ function create(){
         callbackScope: this,
         loop: true
     });
-    asteroidsGroup.
     
 }
 
