@@ -1,5 +1,5 @@
 import 'phaser';
-import Asteroid from 'asteroid.js'
+import Asteroid from './asteroid.js'
 const canvas = document.getElementById('app');
 
 var config = {
@@ -24,7 +24,7 @@ var config = {
 var game = new Phaser.Game(config);
 var asteroidsGroup, asteroidsArray;
 var asteroidCreationTimer;
-
+var ship;
 function preload(){
     
     this.load.baseURL = 'https://examples.phaser.io/assets/';
