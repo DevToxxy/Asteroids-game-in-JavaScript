@@ -1,61 +1,12 @@
 export default class Spaceship {
 
-    constructor(scene) {
-        this.game = scene
-
-        var sprite;
-        var cursors;
-    
-        var bullet;
-        var bullets;
-        var bulletTime = 0;
-    }
-
-    preload() {
-        this.game.load.image('space', 'assets/background.png');
-        this.game.load.image('bullet', 'assets/games/asteroids/bullets.png');
-        this.game.load.image('ship', 'assets/spaceship.png');
-    }
-    
-    create () {
-        //  This will run in Canvas mode, so let's gain a little speed and display
-        this.this.game.renderer.clearBeforeRender = false;
-        this.this.game.renderer.roundPixels = true;
-
-        //  We need arcade physics
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
-        //  A spacey background
-        this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
-
-        //  Our ships bullets
-        bullets = this.game.add.group();
-        bullets.enableBody = true;
-        bullets.physicsBodyType = Phaser.Physics.ARCADE;
-
-        //  All 40 of them
-        bullets.createMultiple(40, 'bullet');
-        bullets.setAll('anchor.x', 0.5);
-        bullets.setAll('anchor.y', 0.5);
-
-        //  Our player ship
-        sprite = this.game.add.sprite(300, 300, 'ship');
-        sprite.anchor.set(0.5);
-
-        //  and its physics settings
-        this.game.physics.enable(sprite, Phaser.Physics.ARCADE);
-
-        sprite.body.drag.set(100);
-        sprite.body.maxVelocity.set(200);
-
-        //  Game input
-        cursors = this.game.input.keyboard.createCursorKeys();
-        this.game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
+    constructor(phaserScene) {
+        this.game = phaserScene
     }
 
     fireBullet () {
 
-        if (this.game.time.now > bulletTime)
+        if (game.time.now > bulletTime)
         {
             bullet = bullets.getFirstExists(false);
     
@@ -64,46 +15,61 @@ export default class Spaceship {
                 bullet.reset(sprite.body.x + 16, sprite.body.y + 16);
                 bullet.lifespan = 2000;
                 bullet.rotation = sprite.rotation;
-                this.game.physics.arcade.velocityFromRotation(sprite.rotation, 400, bullet.body.velocity);
-                bulletTime = this.game.time.now + 50;
+                game.physics.arcade.velocityFromRotation(sprite.rotation, 400, bullet.body.velocity);
+                bulletTime = game.time.now + 50;
             }
         }
+    }
+
+    preload() {
+        this.game.load.image('space', 'assets/background.png');
+        // this.game.load.image('bullet', 'assets/games/asteroids/bullets.png');
+        this.game.load.image('ship', 'assets/spaceship.png');
+    }
     
+    create () {
+        
+        this.sprite = this.game.physics.add.image(400, 300, 'ship');
+
+        this.sprite.setDamping(true);
+        this.sprite.setDrag(0.99);
+        this.sprite.setMaxVelocity(200);
+
+        this.cursors = this.game.input.keyboard.createCursorKeys();
+
+        console.log('create complete')
     }
 
     update () {
-        if (cursors.up.isDown)
+        if (this.cursors.up.isDown)
         {
-            this.physics.velocityFromRotation(sprite.rotation, 200, sprite.body.acceleration);
+            this.game.physics.velocityFromRotation(this.sprite.rotation, 200, this.sprite.body.acceleration);
         }
         else
         {
-            sprite.setAcceleration(0);
+            this.sprite.setAcceleration(0);
         }
     
-        if (cursors.left.isDown)
+        if (this.cursors.left.isDown)
         {
-            sprite.setAngularVelocity(-300);
+            this.sprite.setAngularVelocity(-300);
         }
-        else if (cursors.right.isDown)
+        else if (this.cursors.right.isDown)
         {
-            sprite.setAngularVelocity(300);
+            this.sprite.setAngularVelocity(300);
         }
         else
         {
-            sprite.setAngularVelocity(0);
+            this.sprite.setAngularVelocity(0);
         }
     
-        //text.setText('Speed: ' + sprite.body.speed);
-    
-        // if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+        // if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
         // {
         //     fireBullet();
         // }
-    
-        this.physics.world.wrap(sprite, 32);
+
+        this.game.physics.world.wrap(this.sprite, 32);
     
         // bullets.forEachExists(screenWrap, this);
     }
 }
-
