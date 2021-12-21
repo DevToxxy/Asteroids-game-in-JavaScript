@@ -3,7 +3,7 @@ import Asteroid from "/asteroid.js";
 
 export default class Level1 extends GenericLevel {
     constructor() {
-        super('Level1', 10, 'Level2')
+        super('Level2', 20, 'Level3')
     }
 
     preload() {
