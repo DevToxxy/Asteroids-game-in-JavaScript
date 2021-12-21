@@ -26,8 +26,8 @@ export default class Level1 extends GenericLevel {
         });
 
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
-        this.physics.add.collider(this.spaceship, this.asteroidsGroup,this.shipAsteroidCollision,null,this);
-        this.physics.add.collider(this.bulletGroup, this.asteroidsGroup, this.bulletAsteroidCollision,null,this);
+        this.physics.add.collider(this.spaceship, this.asteroidsGroup, this.shipAsteroidCollision, null, this);
+        this.physics.add.collider(this.bulletGroup, this.asteroidsGroup, this.bulletAsteroidCollision, null, this);
     }
 
     update() {
@@ -36,33 +36,46 @@ export default class Level1 extends GenericLevel {
         for (let asteroid of this.asteroidsArray) {
             asteroid.update();
         }
-        this.physics.world.wrap(this.asteroidsGroup,20);
+        this.physics.world.wrap(this.asteroidsGroup, 20);
     }
 
-    createAsteroid(){
-        if(this.asteroidsArray.length < this.entitiesInitCount){
-            let asteroid = new Asteroid(this,0,0);
-            this.asteroidsGroup.add(asteroid,true);
+    createAsteroid() {
+        if (this.asteroidsArray.length < this.entitiesInitCount) {
+            let asteroid;
+            if (this.asteroidsArray.length % 4 == 0) {
+                asteroid = new Asteroid(this, 780, 580);
+            }
+            else if (this.asteroidsArray.length % 4 == 0) {
+                asteroid = new Asteroid(this, 780, 20);
+            }
+            else if (this.asteroidsArray.length % 4 == 0) {
+                asteroid = new Asteroid(this, 780, 20);
+            }
+            else {
+                asteroid = new Asteroid(this, 20, 580);
+            }
+
+            this.asteroidsGroup.add(asteroid, true);
             this.asteroidsArray.push(asteroid);
         }
     }
 
-    shipAsteroidCollision(ship,asteroid){
+    shipAsteroidCollision(ship, asteroid) {
         this.hearts--;
-        if(this.hearts == 0){
+        if (this.hearts == 0) {
             this.gameLost();
         }
-        else{
+        else {
             this.heartsText.setText('LIVES: ' + this.hearts);
-        }   
+        }
     }
 
     bulletAsteroidCollision(bullet, asteroid) {
-        asteroid.disableBody(true,true);
+        asteroid.disableBody(true, true);
         bullet.disableBody(true, true)
         this.entities--;
 
-        if(this.entities == 0){
+        if (this.entities == 0) {
             this.gameWon();
         }
     }

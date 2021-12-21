@@ -26,8 +26,8 @@ export default class Level2 extends GenericLevel {
         });
 
         this.physics.add.collider(this.aliensGroup, this.aliensGroup);
-        this.physics.add.collider(this.spaceship, this.aliensGroup,this.shipAlienCollision,null,this);
-        this.physics.add.collider(this.bulletGroup, this.aliensGroup, this.bulletAlienCollision,null,this);
+        this.physics.add.collider(this.spaceship, this.aliensGroup, this.shipAlienCollision, null, this);
+        this.physics.add.collider(this.bulletGroup, this.aliensGroup, this.bulletAlienCollision, null, this);
     }
 
     update() {
@@ -36,33 +36,47 @@ export default class Level2 extends GenericLevel {
         for (let alien of this.aliensArray) {
             alien.update();
         }
-        this.physics.world.wrap(this.aliensGroup,20);
+        this.physics.world.wrap(this.aliensGroup, 20);
     }
 
-    createAlien(){
-        if(this.aliensArray.length < this.entitiesInitCount){
-            let alien = new Alien(this,50,50);
-            this.aliensGroup.add(alien,true);
+    createAlien() {
+        if (this.aliensArray.length < this.entitiesInitCount) {
+
+            let alien;
+            if (this.aliensArray.length % 4 == 0) {
+                alien = new Alien(this, 780, 580);
+            }
+            else if (this.aliensArray.length % 4 == 0) {
+                alien = new Alien(this, 780, 20);
+            }
+            else if (this.aliensArray.length % 4 == 0) {
+                alien = new Alien(this, 780, 20);
+            }
+            else {
+                alien = new Alien(this, 20, 580);
+            }
+
+            this.aliensGroup.add(alien, true);
             this.aliensArray.push(alien);
         }
     }
 
-    shipAlienCollision(ship,alien){
+    shipAlienCollision(ship, alien) {
         this.hearts--;
-        if(this.hearts == 0){
+        if (this.hearts == 0) {
             this.gameLost();
         }
-        else{
+        else {
             this.heartsText.setText('LIVES: ' + this.hearts);
-        }   
+        }
     }
 
     bulletAlienCollision(bullet, alien) {
-        alien.disableBody(true,true);
+        alien.disableBody(true, true);
         bullet.disableBody(true, true)
         this.entities--;
 
-        if(this.entities == 0){
+        if (this.entities == 0) {
             this.gameWon();
         }
     }
