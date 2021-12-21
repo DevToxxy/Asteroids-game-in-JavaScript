@@ -1,7 +1,7 @@
-import AbstractLevel from "/scenes/AbstractLevel.js";
+import GenericLevel from "/scenes/GenericLevel.js";
 import Asteroid from "/asteroid.js";
 
-export default class Level1 extends AbstractLevel {
+export default class Level1 extends GenericLevel {
     constructor() {
         super('Level1', 3, 'Level2')
     }
@@ -49,12 +49,22 @@ export default class Level1 extends AbstractLevel {
     }
 
     shipAsteroidCollision(ship,asteroid){
-        // asteroid.disableBody(true,true);
+        this.hearts--;
+        if(this.hearts == 0){
+            this.gameLost();
+        }
+        else{
+            this.heartsText.setText('LIVES: ' + this.hearts);
+        }   
     }
 
     bulletAsteroidCollision(bullet, asteroid) {
         asteroid.disableBody(true,true);
         bullet.disableBody(true, true)
         this.entities--;
+
+        if(this.entities == 0){
+            this.gameWon();
+        }
     }
 }

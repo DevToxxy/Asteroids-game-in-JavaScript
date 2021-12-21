@@ -1,13 +1,14 @@
 import BulletGroup from "/BulletGroup.js"
 import Spaceship from "/Spaceship.js"
 
-export default class AbstractLevel extends Phaser.Scene {
+export default class GenericLevel extends Phaser.Scene {
     
     constructor(stringKey, entitiesCount, nextLevelKey) {
         super({key: stringKey})
         this.nextLevelKey = nextLevelKey
         this.entities = entitiesCount
         this.entitiesInitCount = entitiesCount
+        this.hearts = 3;
     }
     
     preload() {
@@ -17,6 +18,10 @@ export default class AbstractLevel extends Phaser.Scene {
     }
     
     create() {
+        this.heartsText = this.add.text(25, 50, 'LIVES: ' + this.hearts, { 
+            fontFamily: 'Impact', color: '#FF0000', fontSize: 35 
+        });
+
         this.bulletGroup = new BulletGroup(this)
         this.spaceship = new Spaceship(this, 400, 300, this.bulletGroup)
     }
@@ -32,5 +37,12 @@ export default class AbstractLevel extends Phaser.Scene {
     checkLevelState() {
         if (this.entities == 0) return true;
         else false;
+    }
+
+    gameLost(){
+        this.scene.start("GameLostScene");
+    }
+    gameWon(){
+        this.scene.start("GameWonScene");
     }
 }
