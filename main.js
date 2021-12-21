@@ -1,4 +1,5 @@
 import MainScene from "./scenes/mainScene.js"
+import SecondScene from "./scenes/SecondScene.js"
 
 var config = {
     width: 800,
@@ -11,7 +12,7 @@ var config = {
             gravity: { y: 0 }
         }
     },
-    scene: [MainScene]
+    scene: [MainScene, SecondScene]
 };
 
 const game = new Phaser.Game(config)

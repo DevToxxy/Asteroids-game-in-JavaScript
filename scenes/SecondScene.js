@@ -4,9 +4,8 @@ import Asteroid from "/Asteroid.js"
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
-        super({key: 'MainScene'})
-        this.entities = 3
-        this.entitiesInitCount = 3
+        super({key: 'SecondScene'})
+        this.entities = 10
     }
     
     preload() {
@@ -34,6 +33,8 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
         this.physics.add.collider(this.spaceship, this.asteroidsGroup,this.shipAsteroidCollision,null,this);
         this.physics.add.collider(this.bulletGroup, this.asteroidsGroup, this.bulletAsteroidCollision,null,this);
+
+        console.log('druga scena biczez')
     }
 
     update() {
@@ -42,19 +43,10 @@ export default class MainScene extends Phaser.Scene {
             asteroid.update();
         }
         this.physics.world.wrap(this.asteroidsGroup,20);
-
-        if (this.checkLevelState()) {
-            this.scene.start("SecondScene")
-        }
-    }
-
-    checkLevelState() {
-        if (this.entities == 0) return true;
-        else false;
     }
 
     createAsteroid(){
-        if(this.asteroidsArray.length < this.entitiesInitCount){
+        if(this.asteroidsArray.length < 5){
             let asteroid = new Asteroid(this,0,0);
             this.asteroidsGroup.add(asteroid,true);
             this.asteroidsArray.push(asteroid);
@@ -69,6 +61,5 @@ export default class MainScene extends Phaser.Scene {
     bulletAsteroidCollision(bullet, asteroid) {
         asteroid.disableBody(true,true);
         bullet.disableBody(true, true)
-        this.entities--;
     }
 }
