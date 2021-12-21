@@ -22,13 +22,30 @@ export default class MainScene extends Phaser.Scene{
         this.spaceship.create()
         this.bulletGroup.create()
         this.createUfoEvent = this.time.addEvent({
-            delay: 5000,
+            delay: 1000,
             callback: this.createUfo,
             callbackScope: this,
             loop: true
         });
         this.physics.add.collider(this.ufosGroup, this.ufosGroup);
+        //this.physics.collide(this.spaceship, this.ufosGroup, shipHitsUfo)
     }
+
+    /*shipHitsUfo ()
+    {
+        gameoverText = this.add.text(
+ this.physics.world.bounds.centerX,
+ 250,
+ 'GAME OVER',
+ {
+ font: "40px Arial",
+ fill: "#ffffff",
+ align: "center"
+ });
+ gameoverText.setOrigin(0.5);
+ gameoverText.visible = false;
+    }*/
+
 
     update() {
         for (let ufos of this.ufosArray) {
@@ -37,7 +54,7 @@ export default class MainScene extends Phaser.Scene{
         this.spaceship.update()
     }
     createUfo(){
-        let ufo = new Ufos(this,Math.floor(Math.random() * (100 - 10)) + 10,Math.floor(Math.random() * (100 - 10)) + 10, 'ufo');
+        let ufo = new Ufos(this,Math.floor(Math.random() * (800 - 750)) + 750,Math.floor(Math.random() * (800 - 750)) + 750, 'ufo');
         this.ufosGroup.add(ufo,true);
         this.ufosArray.push(ufo);
     }
