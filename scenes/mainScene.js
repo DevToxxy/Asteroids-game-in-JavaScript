@@ -8,17 +8,32 @@ export default class MainScene extends Phaser.Scene {
         super({key: 'MainScene'})
         this.entities = 3
         this.entitiesInitCount = 3
+        this.asteroidTimer = 0;
+        this.asteroidInterval= 5000;
     }
     
     preload() {
         this.load.image('space', '/assets/background.png');
         this.load.image('bullet', '/assets/bullet.png');
         this.load.image('ship', '/assets/spaceship.png');
-        this.load.image('asteroid', 'assets/asteroid.png');
-        this.load.image('ufo', 'assets/ufo.png');
+        this.load.spritesheet('asteroid', 'assets/ast1.png', {
+                frameWidth: 62,
+                frameHeight: 58
+        });
+        this.load.spritesheet('ufo', 'assets/ufo2.png', {
+                frameWidth: 56,
+                frameHeight: 51
+        });
     }
     
     create() {
+        this.anims.create({ key: 'fly', frames: this.anims.generateFrameNumbers('asteroid', { start: 0, end: 0 }), frameRate: 10, repeat: -1});
+        this.anims.create({ key: 'boom', frames: this.anims.generateFrameNumbers(
+            'asteroid', { start: 1, end: 2 }),
+            frameRate: 20, repeat: -1} );
+        this.anims.create({ key: 'kaboom', frames: [{ key: 'asteroid', frame: 2 }], frameRate: 10});
+        //this.anims.create({ key: 'nothing', frames: [{ key: 'asteroid', frame: 3  }], frameRate: 20 });
+
         this.asteroidsGroup = this.physics.add.group();
         this.asteroidsArray = [];
         this.asteroidsGroup.defaults = {};
@@ -82,7 +97,7 @@ export default class MainScene extends Phaser.Scene {
 
     createUfo(){
         if(this.ufosArray.length < this.entitiesInitCount){
-            let ufos = new Ufos(this,Math.floor(Math.random() * (800 - 750)) + 750,Math.floor(Math.random() * (800 - 750)) + 750, 'ufo');
+            let ufos = new Ufos(this,Math.floor(Math.random() * (800 - 750)) + 750,Math.floor(Math.random() * (800 - 750)) + 750, 'fly');
             this.ufosGroup.add(ufos,true);
             this.ufosArray.push(ufos);
             console.log(this.ufosArray.length)
@@ -94,8 +109,49 @@ export default class MainScene extends Phaser.Scene {
     }
 
     bulletAsteroidCollision(bullet, asteroid) {
-        asteroid.disableBody(true,true);
+        asteroid.anims.globalTimeScale =100;
+        //this.addMix('boom', 'kaboom', 1000)
+        asteroid.anims.play('boom', true);
+
+        /*if(this.scene.time.now > this.asteroidTimer) {
+            this.asteroidTimer = this.scene.time.now + this.asteroidInterval
+            
+        }*/
+        asteroid.anims.play('kaboom', true);
+        asteroid.anims.play('nothing', true);
+        this.astEvent = this.time.addEvent({
+            delay: 500,
+            callback: this.createUfo,
+            callbackScope: this,
+            loop: true
+        });
+        //asteroid.disableBody(true,true);
+        
         bullet.disableBody(true, true)
         this.entities--;
     }
+    /*addMix (animA, animB, delay)      // to z dokumnetacji
+    {
+        var anims = this.anims;
+        var mixes = this.mixes;
+
+        var keyA = (typeof(animA) === 'string') ? animA : animA.key;
+        var keyB = (typeof(animB) === 'string') ? animB : animB.key;
+
+        if (anims.has(keyA) && anims.has(keyB))
+        {
+            var mixObj = mixes.get(keyA);
+
+            if (!mixObj)
+            {
+                mixObj = {};
+            }
+
+            mixObj[keyB] = delay;
+
+            mixes.set(keyA, mixObj);
+        }
+
+        return this;
+    }*/
 }
