@@ -2,13 +2,16 @@ import BulletGroup from "/BulletGroup.js"
 import Spaceship from "/Spaceship.js"
 import Asteroid from "/Asteroid.js"
 
+
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({key: 'MainScene'})
-        this.entities = 3
-        this.entitiesInitCount = 3
+        this.entities = 3;
+        this.entitiesInitCount = 3;
+        this.hearts = 3;
     }
-    
+ 
+
     preload() {
         this.load.image('space', '/assets/background.png');
         this.load.image('bullet', '/assets/bullet.png');
@@ -17,6 +20,10 @@ export default class MainScene extends Phaser.Scene {
     }
     
     create() {
+        this.heartsText = this.add.text(25, 50, 'LIVES: ' + this.hearts, { 
+            fontFamily: 'Impact', color: '#FF0000', fontSize: 35 
+        });
+
         this.asteroidsGroup = this.physics.add.group();
         this.asteroidsArray = [];
         this.asteroidsGroup.defaults = {};
@@ -63,6 +70,14 @@ export default class MainScene extends Phaser.Scene {
     }
 
     shipAsteroidCollision(ship,asteroid){
+        this.hearts--;
+        if(this.hearts == 0){
+            gameLost();
+        }
+        else{
+            this.heartsText.setText('hearts: ' + this.hearts);
+        }
+
         // asteroid.disableBody(true,true);
     }
 
