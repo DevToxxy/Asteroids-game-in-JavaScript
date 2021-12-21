@@ -63,10 +63,10 @@ export default class SecondScene extends Phaser.Scene {
     shipAsteroidCollision(ship,asteroid){
         this.hearts--;
         if(this.hearts == 0){
-            gameLost();
+            this.gameLost();
         }
         else{
-            this.heartsText.setText('hearts: ' + this.hearts);
+            this.heartsText.setText('LIVES: ' + this.hearts);
         }    
     }
 
@@ -75,5 +75,9 @@ export default class SecondScene extends Phaser.Scene {
         bullet.disableBody(true, true)
         this.entities--;
 
+    }
+    
+    gameLost(){
+        this.scene.start("GameLostScene");
     }
 }

@@ -72,10 +72,10 @@ export default class MainScene extends Phaser.Scene {
     shipAsteroidCollision(ship,asteroid){
         this.hearts--;
         if(this.hearts == 0){
-            gameLost();
+            this.gameLost();
         }
         else{
-            this.heartsText.setText('hearts: ' + this.hearts);
+            this.heartsText.setText('LIVES: ' + this.hearts);
         }
 
         // asteroid.disableBody(true,true);
@@ -85,5 +85,9 @@ export default class MainScene extends Phaser.Scene {
         asteroid.disableBody(true,true);
         bullet.disableBody(true, true)
         this.entities--;
+    }
+
+    gameLost(){
+        this.scene.start("GameLostScene");
     }
 }
