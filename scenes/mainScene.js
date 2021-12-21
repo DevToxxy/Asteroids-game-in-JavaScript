@@ -7,15 +7,14 @@ export default class MainScene extends Phaser.Scene {
     }
     
     preload() {
-        this.spaceship = new Spaceship(this)
-        this.bulletGroup = new BulletGroup(this)
-        this.spaceship.preload()
-        this.bulletGroup.preload()
+        this.load.image('space', '/assets/background.png');
+        this.load.image('bullet', '/assets/bullet.png');
+        this.load.image('ship', '/assets/spaceship.png');
     }
     
     create() {
-        this.spaceship.create()
-        this.bulletGroup.create()
+        this.playerBulletGroup = new BulletGroup(this)
+        this.spaceship = new Spaceship(this, this.playerBulletGroup)
     }
 
     update() {

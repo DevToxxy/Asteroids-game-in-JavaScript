@@ -1,74 +1,55 @@
 export default class Spaceship {
 
-    constructor(phaserScene) {
-        this.game = phaserScene
+    constructor(phaserScene, bulletGroup) {
+        this.scene = phaserScene
+        this.bulletGroup = bulletGroup
+
+        this.shipSprite = this.scene.physics.add.image(400, 300, 'ship');
+        this.shipSprite.setDamping(true);
+        this.shipSprite.setDrag(0.3);
+        this.shipSprite.setMaxVelocity(200);
+
+        this.cursors = this.scene.input.keyboard.createCursorKeys();
+        this.bulletTime = 0
+        this.bulletInterval = 100
     }
 
     fireBullet () {
-
-        if (game.time.now > bulletTime)
-        {
-            bullet = bullets.getFirstExists(false);
-    
-            if (bullet)
-            {
-                bullet.reset(sprite.body.x + 16, sprite.body.y + 16);
-                bullet.lifespan = 2000;
-                bullet.rotation = sprite.rotation;
-                game.physics.arcade.velocityFromRotation(sprite.rotation, 400, bullet.body.velocity);
-                bulletTime = game.time.now + 50;
-            }
+        if(this.scene.time.now > this.bulletTime) {
+            this.bulletTime = this.scene.time.now + this.bulletInterval
+            this.bulletGroup.fire(this.shipSprite.x, this.shipSprite.y, this.shipSprite.angle)
         }
-    }
-
-    preload() {
-        this.game.load.image('space', 'assets/background.png');
-        // this.game.load.image('bullet', 'assets/games/asteroids/bullets.png');
-        this.game.load.image('ship', 'assets/spaceship.png');
-    }
-    
-    create () {
-        
-        this.sprite = this.game.physics.add.image(400, 300, 'ship');
-
-        this.sprite.setDamping(true);
-        this.sprite.setDrag(0.99);
-        this.sprite.setMaxVelocity(200);
-
-        this.cursors = this.game.input.keyboard.createCursorKeys();
-
-        console.log('create complete')
     }
 
     update () {
         if (this.cursors.up.isDown)
         {
-            this.game.physics.velocityFromRotation(this.sprite.rotation, 200, this.sprite.body.acceleration);
+            this.scene.physics.velocityFromRotation(this.shipSprite.rotation, 200, this.shipSprite.body.acceleration);
         }
         else
         {
-            this.sprite.setAcceleration(0);
+            this.shipSprite.setAcceleration(0);
         }
     
         if (this.cursors.left.isDown)
         {
-            this.sprite.setAngularVelocity(-300);
+            this.shipSprite.setAngularVelocity(-300);
         }
         else if (this.cursors.right.isDown)
         {
-            this.sprite.setAngularVelocity(300);
+            this.shipSprite.setAngularVelocity(300);
         }
         else
         {
-            this.sprite.setAngularVelocity(0);
+            this.shipSprite.setAngularVelocity(0);
         }
     
         if (this.cursors.space.isDown)
         {
-            fireBullet();
+            this.fireBullet();
         }
 
-        this.game.physics.world.wrap(this.sprite, 32);
+        this.scene.physics.world.wrap(this.shipSprite, 32);
     
         // bullets.forEachExists(screenWrap, this);
     }
