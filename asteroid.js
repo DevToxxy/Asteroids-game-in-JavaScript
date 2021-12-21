@@ -8,6 +8,7 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
         this.randomX = Math.random() - 0.5;
         this.randomY = Math.random() - 0.5;
         this.setVelocity(this.randomX*200,this.randomY*200);
+        this.setBounce(1);
         console.log(this.random);
     }
     // preload() {
