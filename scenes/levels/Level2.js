@@ -44,16 +44,16 @@ export default class Level2 extends GenericLevel {
 
             let alien;
             if (this.aliensArray.length % 4 == 0) {
-                alien = new Alien(this, 780, 580);
+                alien = new Alien(this, 760, 560);
             }
-            else if (this.aliensArray.length % 4 == 0) {
-                alien = new Alien(this, 780, 20);
+            else if (this.aliensArray.length % 4 == 1) {
+                alien = new Alien(this, 760, 40);
             }
-            else if (this.aliensArray.length % 4 == 0) {
-                alien = new Alien(this, 780, 20);
+            else if (this.aliensArray.length % 4 == 2) {
+                alien = new Alien(this, 40, 40);
             }
             else {
-                alien = new Alien(this, 20, 580);
+                alien = new Alien(this, 40, 560);
             }
 
             this.aliensGroup.add(alien, true);

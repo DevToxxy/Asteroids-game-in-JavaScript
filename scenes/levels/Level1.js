@@ -19,7 +19,7 @@ export default class Level1 extends GenericLevel {
         this.asteroidsGroup.defaults = {};
 
         this.createAsteroidEvent = this.time.addEvent({
-            delay: 500,
+            delay: 1500,
             callback: this.createAsteroid,
             callbackScope: this,
             loop: true
@@ -43,16 +43,16 @@ export default class Level1 extends GenericLevel {
         if (this.asteroidsArray.length < this.entitiesInitCount) {
             let asteroid;
             if (this.asteroidsArray.length % 4 == 0) {
-                asteroid = new Asteroid(this, 780, 580);
+                asteroid = new Asteroid(this, 760, 560);
             }
-            else if (this.asteroidsArray.length % 4 == 0) {
-                asteroid = new Asteroid(this, 780, 20);
+            else if (this.asteroidsArray.length % 4 == 1) {
+                asteroid = new Asteroid(this, 760, 40);
             }
-            else if (this.asteroidsArray.length % 4 == 0) {
-                asteroid = new Asteroid(this, 780, 20);
+            else if (this.asteroidsArray.length % 4 == 2) {
+                asteroid = new Asteroid(this, 40, 40);
             }
             else {
-                asteroid = new Asteroid(this, 20, 580);
+                asteroid = new Asteroid(this, 40, 560);
             }
 
             this.asteroidsGroup.add(asteroid, true);
