@@ -14,7 +14,7 @@ var config = {
             gravity: { y: 0 }
         }
     },
-    scene: [ Level1, Level2, GameLostScene, GameWonScene]
+    scene: [ Level2, GameLostScene, GameWonScene]
 };
 
 const game = new Phaser.Game(config)

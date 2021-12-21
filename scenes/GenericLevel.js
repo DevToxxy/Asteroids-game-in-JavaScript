@@ -14,7 +14,11 @@ export default class GenericLevel extends Phaser.Scene {
     preload() {
         this.load.image('space', '/assets/background.png');
         this.load.image('bullet', '/assets/bullet.png');
-        this.load.image('ship', '/assets/spaceship.png');
+        // this.load.image('ship', '/assets/spaceship.png');
+        this.load.spritesheet('ship',
+            '/assets/ship.png',
+            { frameWidth: 40, frameHeight: 40 }
+        );
     }
     
     create() {
@@ -24,19 +28,17 @@ export default class GenericLevel extends Phaser.Scene {
 
         this.bulletGroup = new BulletGroup(this)
         this.spaceship = new Spaceship(this, 400, 300, this.bulletGroup)
+
+        this.anims.create({ key: 'fly',
+            frames: this.anims.generateFrameNumbers(
+            'ship', { start: 0, end: 1 }),
+            frameRate: 10, repeat: -1
+        });
+        this.spaceship.anims.play('fly', true);
     }
 
     update() {
         this.spaceship.update()
-
-        if (this.checkLevelState()) {
-            this.scene.start(this.nextLevelKey)
-        }
-    }
-
-    checkLevelState() {
-        if (this.entities == 0) return true;
-        else false;
     }
 
     gameLost(){

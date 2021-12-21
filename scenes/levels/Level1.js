@@ -8,7 +8,7 @@ export default class Level1 extends GenericLevel {
 
     preload() {
         super.preload()
-        this.load.image('asteroid', 'assets/asteroid.png');
+        this.load.image('asteroid', '/assets/asteroid.png');
     }
 
     create() {
@@ -44,7 +44,6 @@ export default class Level1 extends GenericLevel {
             let asteroid = new Asteroid(this,0,0);
             this.asteroidsGroup.add(asteroid,true);
             this.asteroidsArray.push(asteroid);
-            console.log(this.asteroidsArray.length)
         }
     }
 
