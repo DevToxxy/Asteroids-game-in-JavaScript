@@ -10,26 +10,11 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(this.randomX*200,this.randomY*200);
         this.setBounce(1);
     }
-    // preload() {
-    //     //this.game.load.image('space', 'assets/background.png');
-    //     this.game.load.image('asteroid', 'assets/asteroid.png');
-    // }
-    
-    // create () {
-        
-    //     this.sprite = this.game.physics.add.image(400, 300, 'asteroid');
-    //     this.sprite.setVelocity(100,100);
-    //     console.log('create complete')
-    // }
 
     update () {
         //this.setVelocity(this.randomX*200,this.randomY*200);
 
         //this.game.physics.world.wrap(this.sprite, 32);
     
-    }
-
-    die(){
-        this.disableBody(true,true)
     }
 }

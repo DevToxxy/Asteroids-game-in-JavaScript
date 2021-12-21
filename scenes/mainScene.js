@@ -8,25 +8,19 @@ export default class MainScene extends Phaser.Scene {
     }
     
     preload() {
-        this.spaceship = new Spaceship(this)
-        this.bulletGroup = new BulletGroup(this)
-
-        this.asteroidsGroup = this.physics.add.group();
-        this.asteroidsArray = [];
-        this.asteroidsGroup.defaults = {};
-
         this.load.image('space', '/assets/background.png');
         this.load.image('bullet', '/assets/bullet.png');
         this.load.image('ship', '/assets/spaceship.png');
         this.load.image('asteroid', 'assets/asteroid.png');
-        //this.asteroid = new Asteroid(this)
-    
-
     }
     
     create() {
-        this.playerBulletGroup = new BulletGroup(this)
-        this.spaceship = new Spaceship(this, this.playerBulletGroup)
+        this.asteroidsGroup = this.physics.add.group();
+        this.asteroidsArray = [];
+        this.asteroidsGroup.defaults = {};
+
+        this.bulletGroup = new BulletGroup(this)
+        this.spaceship = new Spaceship(this, 400, 300, this.bulletGroup)
 
         this.createAsteroidEvent = this.time.addEvent({
             delay: 500,
@@ -37,6 +31,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
         this.physics.add.collider(this.spaceship, this.asteroidsGroup,this.shipAsteroidCollision,null,this);
+        this.physics.add.collider(this.bulletGroup, this.asteroidsGroup, this.bulletAsteroidCollision,null,this);
     }
 
     update() {
@@ -56,9 +51,13 @@ export default class MainScene extends Phaser.Scene {
             console.log(this.asteroidsArray.length)
         }
     }
-    shipAsteroidCollision(ship,asteroid){
-        //asteroid.disableBody(true,true);
 
+    shipAsteroidCollision(ship,asteroid){
+        // asteroid.disableBody(true,true);
     }
 
+    bulletAsteroidCollision(bullet, asteroid) {
+        asteroid.disableBody(true,true);
+        bullet.disableBody(true, true)
+    }
 }
