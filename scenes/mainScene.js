@@ -39,6 +39,14 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
         this.physics.add.collider(this.ship, this.asteroidsGroup,this.shipAsteroidCollision,null,this);
 
+        this.load.image('space', '/assets/background.png');
+        this.load.image('bullet', '/assets/bullet.png');
+        this.load.image('ship', '/assets/spaceship.png');
+    }
+    
+    create() {
+        this.playerBulletGroup = new BulletGroup(this)
+        this.spaceship = new Spaceship(this, this.playerBulletGroup)
     }
 
     update() {

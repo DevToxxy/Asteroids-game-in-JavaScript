@@ -1,77 +1,53 @@
-export default class BulletGroup {
-    constructor(phaserScene, shooter) {
-        this.game = phaserScene
-        this.shooter = shooter
+class Bullet extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'bullet');
+        this.bulletSpeed = 300
+        this.scene = scene
+        this.maxBulletsCount = 100
     }
 
-    preload ()
-    {
-        this.game.load.image('bullet', 'assets/bullet.png');
+    fire(x, y, angle) {
+
+        this.body.reset(x, y)
+
+        this.setActive(true)
+        this.setVisible(true)
+
+        const vector = this.scene.physics.velocityFromAngle(angle, this.bulletSpeed)
+        this.setVelocityX(vector.x)
+        this.setVelocityY(vector.y)
     }
 
-    create ()
-    {
-        var Bullet = new Phaser.Class({
-
-            Extends: Phaser.GameObjects.Image,
-
-            initialize:
-
-            function Bullet (scene)
-            {
-                Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
-
-                this.speed = Phaser.Math.GetSpeed(400, 1);
-            },
-
-            fire: function (x, y)
-            {
-                this.setPosition(x, y - 50);
-
-                this.setActive(true);
-                this.setVisible(true);
-            },
-
-            update: function (time, delta)
-            {
-                this.y -= this.speed * delta;
-
-                if (this.y < -50)
-                {
-                    this.setActive(false);
-                    this.setVisible(false);
-                }
-            }
-
-        });
-
-        this.bullets = this.game.add.group({
-            classType: Bullet,
-            maxSize: 10,
-            runChildUpdate: true
-        });
-
-        // cursors = this.input.keyboard.createCursorKeys();
-
-        this.speed = Phaser.Math.GetSpeed(300, 1);
-    }
-
-    update (time, delta)
-    {
-        if (cursors.up.isDown && time > lastFired)
-        {
-            var bullet = bullets.get();
-
-            if (bullet)
-            {
-                bullet.fire(shooter.x, shooter.y);
-
-                lastFired = time + 50;
-            }
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+        if(this.y <= 0 
+            || this.y >= 600
+            || this.x >= 800
+            || this.x <= 0) {
+            this.setActive(false)
+            this.setVisible(false)
         }
     }
+}
 
-    spawn (x, y, vx, vy) {
-
+export default class BulletGroup extends Phaser.Physics.Arcade.Group {
+    constructor(scene) {
+        super(scene.physics.world, scene);
+        
+        this.createMultiple({
+            classType: Bullet,
+            frameQuantity: this.maxBulletsCount = 100,
+            active: false,
+            visible: false,
+            key: 'bullet'
+        })
     }
-} 
+
+    fire(x, y, angle) {
+        const bullet = this.getFirstDead(false)
+
+        if(bullet) {
+            bullet.fire(x,y,angle)
+        }
+    }
+}
