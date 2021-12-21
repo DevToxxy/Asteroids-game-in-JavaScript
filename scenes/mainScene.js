@@ -37,8 +37,7 @@ export default class MainScene extends Phaser.Scene {
         });
 
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
-
-        console.log(this.asteroidsGroup);
+        this.physics.add.collider(this.ship, this.asteroidsGroup,this.shipAsteroidCollision,null,this);
 
     }
 
@@ -52,9 +51,16 @@ export default class MainScene extends Phaser.Scene {
     }
 
     createAsteroid(){
-        let asteroid = new Asteroid(this,0,0);
-        this.asteroidsGroup.add(asteroid,true);
-        this.asteroidsArray.push(asteroid);
+        if(this.asteroidsArray.length < 5){
+            let asteroid = new Asteroid(this,0,0);
+            this.asteroidsGroup.add(asteroid,true);
+            this.asteroidsArray.push(asteroid);
+            console.log(this.asteroidsArray.length)
+        }
+    }
+    shipAsteroidCollision(ship,asteroid){
+        asteroid.disableBody(true,true);
+
     }
 
 }

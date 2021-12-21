@@ -9,7 +9,6 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
         this.randomY = Math.random() - 0.5;
         this.setVelocity(this.randomX*200,this.randomY*200);
         this.setBounce(1);
-        console.log(this.random);
     }
     // preload() {
     //     //this.game.load.image('space', 'assets/background.png');
@@ -28,5 +27,9 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
 
         //this.game.physics.world.wrap(this.sprite, 32);
     
+    }
+
+    die(){
+        this.disableBody(true,true)
     }
 }
