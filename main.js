@@ -1,7 +1,6 @@
 import GameLostScene from "./scenes/GameLostScene.js";
-import MainScene from "./scenes/mainScene.js"
-import SecondScene from "./scenes/SecondScene.js"
 import GameWonScene from "./scenes/GameWonScene.js";
+import Level1 from "/scenes/levels/Level1.js";
 
 var config = {
     width: 800,
@@ -14,7 +13,7 @@ var config = {
             gravity: { y: 0 }
         }
     },
-    scene: [MainScene, SecondScene,GameLostScene, GameWonScene]
+    scene: [ Level1, GameLostScene, GameWonScene]
 };
 
 const game = new Phaser.Game(config)
