@@ -1,6 +1,7 @@
 import BulletGroup from "/BulletGroup.js"
 import Spaceship from "/Spaceship.js"
 import Asteroid from "/Asteroid.js"
+import Ufos from "/ufos.js"
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -14,6 +15,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('bullet', '/assets/bullet.png');
         this.load.image('ship', '/assets/spaceship.png');
         this.load.image('asteroid', 'assets/asteroid.png');
+        this.load.image('ufo', 'assets/ufo.png');
     }
     
     create() {
@@ -21,6 +23,9 @@ export default class MainScene extends Phaser.Scene {
         this.asteroidsArray = [];
         this.asteroidsGroup.defaults = {};
 
+        this.ufosGroup = this.physics.add.group();
+        this.ufosArray = [];
+        this.ufosGroup.defaults = {};
         this.bulletGroup = new BulletGroup(this)
         this.spaceship = new Spaceship(this, 400, 300, this.bulletGroup)
 
@@ -31,7 +36,15 @@ export default class MainScene extends Phaser.Scene {
             loop: true
         });
 
+        this.createUfoEvent = this.time.addEvent({
+            delay: 500,
+            callback: this.createUfo,
+            callbackScope: this,
+            loop: true
+        });
+
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
+        this.physics.add.collider(this.ufosGroup, this.ufosGroup);
         this.physics.add.collider(this.spaceship, this.asteroidsGroup,this.shipAsteroidCollision,null,this);
         this.physics.add.collider(this.bulletGroup, this.asteroidsGroup, this.bulletAsteroidCollision,null,this);
     }
@@ -41,6 +54,11 @@ export default class MainScene extends Phaser.Scene {
         for (let asteroid of this.asteroidsArray) {
             asteroid.update();
         }
+
+        for (let ufos of this.ufosArray) {
+            ufos.update();
+        }
+
         this.physics.world.wrap(this.asteroidsGroup,20);
 
         if (this.checkLevelState()) {
@@ -59,6 +77,15 @@ export default class MainScene extends Phaser.Scene {
             this.asteroidsGroup.add(asteroid,true);
             this.asteroidsArray.push(asteroid);
             console.log(this.asteroidsArray.length)
+        }
+    }
+
+    createUfo(){
+        if(this.ufosArray.length < this.entitiesInitCount){
+            let ufos = new Ufos(this,Math.floor(Math.random() * (800 - 750)) + 750,Math.floor(Math.random() * (800 - 750)) + 750, 'ufo');
+            this.ufosGroup.add(ufos,true);
+            this.ufosArray.push(ufos);
+            console.log(this.ufosArray.length)
         }
     }
 
