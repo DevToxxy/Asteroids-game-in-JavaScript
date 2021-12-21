@@ -13,6 +13,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.asteroidsGroup = this.physics.add.group();
         this.asteroidsArray = [];
+        this.asteroidsGroup.defaults = {};
 
         this.load.image('asteroid', 'assets/asteroid.png');
         //this.asteroid = new Asteroid(this)
@@ -29,7 +30,7 @@ export default class MainScene extends Phaser.Scene {
 
 
         this.createAsteroidEvent = this.time.addEvent({
-            delay: 5000,
+            delay: 500,
             callback: this.createAsteroid,
             callbackScope: this,
             loop: true
