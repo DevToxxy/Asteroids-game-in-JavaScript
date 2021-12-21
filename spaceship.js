@@ -9,6 +9,9 @@ export default class Spaceship {
         this.shipSprite.setDrag(0.3);
         this.shipSprite.setMaxVelocity(200);
 
+        phaserScene.add.existing(this); //uncomment in case of physics fuckup
+        phaserScene.physics.add.existing(this);
+
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         this.bulletTime = 0
         this.bulletInterval = 100
