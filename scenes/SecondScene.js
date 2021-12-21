@@ -5,8 +5,8 @@ import Asteroid from "/Asteroid.js"
 export default class SecondScene extends Phaser.Scene {
     constructor() {
         super({key: 'SecondScene'})
-        this.entities = 10;
-        this.entitiesInitCount = 10;
+        this.entities = 1;
+        this.entitiesInitCount = 1;
         this.hearts = 3;
     }
     
@@ -75,9 +75,17 @@ export default class SecondScene extends Phaser.Scene {
         bullet.disableBody(true, true)
         this.entities--;
 
+        if(this.entities == 0){
+            this.gameWon();
+        }
+
     }
     
     gameLost(){
         this.scene.start("GameLostScene");
+    }
+    gameWon(){
+        this.scene.start("GameWonScene");
+
     }
 }
