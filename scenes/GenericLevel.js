@@ -43,6 +43,6 @@ export default class GenericLevel extends Phaser.Scene {
         this.scene.start("GameLostScene");
     }
     gameWon(){
-        this.scene.start("GameWonScene");
+        this.scene.start(this.nextLevelKey);
     }
 }
