@@ -78,19 +78,19 @@ export default class Level2 extends GenericLevel {
             let alien;
             if (this.aliensArray.length % 4 == 0) {
                 alien = new Alien(this, 640, 560);
-                this.ufo4Text.setText('UFO: LOOOSEEER!!!');
+                this.ufo4Text.setText('UFO: YOU CANT WIN');
             }
             else if (this.aliensArray.length % 4 == 1) {
                 alien = new Alien(this, 640, 40);
-                this.ufo1Text.setText('UFO: JESTEŚ SŁABY!!!');
+                this.ufo1Text.setText('UFO: WE ARE SUPERIOR');
             }
             else if (this.aliensArray.length % 4 == 2) {
                 alien = new Alien(this, 100, 40);
-                this.ufo2Text.setText('UFO: NIGDY NAS NIE POKONASZ!!!');
+                this.ufo2Text.setText('UFO: YOU WILL NEVER WIN!!!');
             }
             else {
                 alien = new Alien(this, 100, 560);
-                this.ufo3Text.setText('UFO: NADCIĄGAMY!!!');
+                this.ufo3Text.setText('UFO: GO!!!');
             }
             alien.play('ufoGlow'); 
             this.aliensGroup.add(alien, true);
