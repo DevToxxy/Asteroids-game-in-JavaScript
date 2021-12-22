@@ -1,7 +1,7 @@
 class Bullet extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'bullet');
-        this.bulletSpeed = 300
+        this.bulletSpeed = 1000
         this.scene = scene
         this.maxBulletsCount = 100
     }
