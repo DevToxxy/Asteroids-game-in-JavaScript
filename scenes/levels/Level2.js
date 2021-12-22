@@ -3,21 +3,43 @@ import Alien from "/alien.js";
 
 export default class Level2 extends GenericLevel {
     constructor() {
-        super('Level2', 12, 'GameWonScene')
+        super('Level2', 4, 'GameWonScene')
     }
 
     preload() {
         super.preload()
+        this.load.image('background2', 'assets/background2.png')
         this.load.spritesheet('alien',
             '/assets/ufo.png',
             { frameWidth: 70, frameHeight: 70 }
         );
+        this.ufo1Text = this.add.text(640 , 15, 'UFO: JESTEŚ SŁABY!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
+        this.ufo2Text = this.add.text(100, 550, 'UFO: NIGDY NAS NIE POKONASZ!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
+        this.ufo3Text = this.add.text(640, 570, 'UFO: NADCIĄGAMY!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
 
     }
 
     create() {
+        this.add.image(400,300,'background2')
         super.create()
-
+        this.ufo1Text = this.add.text(640, 40, '', {//'UFO: JESTEŚ SŁABY!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
+        this.ufo2Text = this.add.text(100, 40, '', {//UFO: NIGDY NAS NIE POKONASZ!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
+        this.ufo3Text = this.add.text(100, 560, '', {//'UFO: NADCIĄGAMY!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
+        this.ufo4Text = this.add.text(640, 560, '', {//'UFO: NADCIĄGAMY!!! ', { 
+            fontFamily: 'Impact', color: 'green', fontSize: 16 
+        });
         this.aliensGroup = this.physics.add.group();
         this.aliensArray = [];
         this.aliensGroup.defaults = {};
@@ -45,6 +67,7 @@ export default class Level2 extends GenericLevel {
 
         for (let alien of this.aliensArray) {
             alien.update(this.spaceship);
+            
         }
         this.physics.world.wrap(this.aliensGroup, 20);
     }
@@ -54,18 +77,22 @@ export default class Level2 extends GenericLevel {
 
             let alien;
             if (this.aliensArray.length % 4 == 0) {
-                alien = new Alien(this, 760, 560);
+                alien = new Alien(this, 640, 560);
+                this.ufo4Text.setText('UFO: LOOOSEEER!!!');
             }
             else if (this.aliensArray.length % 4 == 1) {
-                alien = new Alien(this, 760, 40);
+                alien = new Alien(this, 640, 40);
+                this.ufo1Text.setText('UFO: JESTEŚ SŁABY!!!');
             }
             else if (this.aliensArray.length % 4 == 2) {
-                alien = new Alien(this, 40, 40);
+                alien = new Alien(this, 100, 40);
+                this.ufo2Text.setText('UFO: NIGDY NAS NIE POKONASZ!!!');
             }
             else {
-                alien = new Alien(this, 40, 560);
+                alien = new Alien(this, 100, 560);
+                this.ufo3Text.setText('UFO: NADCIĄGAMY!!!');
             }
-            alien.play('ufoGlow');
+            alien.play('ufoGlow'); 
             this.aliensGroup.add(alien, true);
             this.aliensArray.push(alien);
         }
@@ -78,20 +105,18 @@ export default class Level2 extends GenericLevel {
         if (this.hearts == 0) {
             this.gameLost();
         }
-        else {
-            this.heartsText.setText('LIVES: ' + this.hearts);
-        }   
-        if (this.entities == 0) {
+        else if (this.entities == 0) {
             this.gameWon();
         }
-
+        else {
+            this.heartsText.setText('LIVES: ' + this.hearts);
+        }
     }
 
     bulletAlienCollision(bullet, alien) {
         alien.disableBody(true,true);
         bullet.disableBody(false, true)
         this.entities--;
-        console.log('Entities to eliminate: '+this.entities)
 
         if (this.entities == 0) {
             this.gameWon();
