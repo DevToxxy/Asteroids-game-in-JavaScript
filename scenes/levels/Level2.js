@@ -73,12 +73,15 @@ export default class Level2 extends GenericLevel {
 
     shipAlienCollision(ship, alien) {
         this.hearts--;
+        this.entities--;
+        alien.disableBody(true,true);
         if (this.hearts == 0) {
             this.gameLost();
         }
         else {
             this.heartsText.setText('LIVES: ' + this.hearts);
         }   
+
     }
 
     bulletAlienCollision(bullet, alien) {
