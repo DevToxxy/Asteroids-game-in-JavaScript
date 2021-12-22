@@ -8,7 +8,10 @@ export default class Level1 extends GenericLevel {
 
     preload() {
         super.preload()
-        this.load.image('asteroid', '/assets/asteroid.png');
+        this.load.spritesheet('asteroid',
+            '/assets/asteroid_explosion.png',
+            { frameWidth: 60, frameHeight: 60 }
+        );
     }
 
     create() {
@@ -24,6 +27,14 @@ export default class Level1 extends GenericLevel {
             callbackScope: this,
             loop: true
         });
+
+        this.anims.create({ key: 'destroy',
+            frames: this.anims.generateFrameNumbers(
+            'asteroid', { start: 0, end: 3 }),
+            frameRate: 10
+        });
+
+        
 
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
         this.physics.add.collider(this.spaceship, this.asteroidsGroup, this.shipAsteroidCollision, null, this);
@@ -68,15 +79,18 @@ export default class Level1 extends GenericLevel {
         else {
             this.heartsText.setText('LIVES: ' + this.hearts);
         }
+        asteroid.disableBody(false, true);
+        asteroid.anims.play('destroy', true);
     }
 
     bulletAsteroidCollision(bullet, asteroid) {
-        asteroid.disableBody(true, true);
-        bullet.disableBody(true, true)
+        asteroid.disableBody(false, true);
+        bullet.disableBody(false, true)
         this.entities--;
 
         if (this.entities == 0) {
             this.gameWon();
         }
+        asteroid.anims.play('destroy', true);
     }
 }
