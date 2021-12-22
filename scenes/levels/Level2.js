@@ -18,16 +18,16 @@ export default class Level2 extends GenericLevel {
     create() {
         this.add.image(400,300,'background2')
         super.create()
-        this.ufo1Text = this.add.text(640, 40, '', {//'UFO: JESTEŚ SŁABY!!! ', { 
+        this.ufo1Text = this.add.text(640, 40, '', {
             fontFamily: 'Impact', color: 'green', fontSize: 16 
         });
-        this.ufo2Text = this.add.text(100, 40, '', {//UFO: NIGDY NAS NIE POKONASZ!!! ', { 
+        this.ufo2Text = this.add.text(100, 40, '', {
             fontFamily: 'Impact', color: 'green', fontSize: 16 
         });
-        this.ufo3Text = this.add.text(100, 560, '', {//'UFO: NADCIĄGAMY!!! ', { 
+        this.ufo3Text = this.add.text(100, 560, '', { 
             fontFamily: 'Impact', color: 'green', fontSize: 16 
         });
-        this.ufo4Text = this.add.text(640, 560, '', {//'UFO: NADCIĄGAMY!!! ', { 
+        this.ufo4Text = this.add.text(640, 560, '', {
             fontFamily: 'Impact', color: 'green', fontSize: 16 
         });
         this.aliensGroup = this.physics.add.group();
