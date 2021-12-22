@@ -8,7 +8,11 @@ export default class Level2 extends GenericLevel {
 
     preload() {
         super.preload()
-        this.load.image('alien', '/assets/ufo.png');
+        this.load.spritesheet('alien',
+            '/assets/ufo.png',
+            { frameWidth: 70, frameHeight: 70 }
+        );
+
     }
 
     create() {
@@ -17,6 +21,12 @@ export default class Level2 extends GenericLevel {
         this.aliensGroup = this.physics.add.group();
         this.aliensArray = [];
         this.aliensGroup.defaults = {};
+
+        this.anims.create({ key: 'ufoGlow',
+        frames: this.anims.generateFrameNumbers(
+        'alien', { start: 0, end: 1 }),
+        frameRate: 10, repeat: -1
+        });
 
         this.createAlienEvent = this.time.addEvent({
             delay: 500,
@@ -55,7 +65,7 @@ export default class Level2 extends GenericLevel {
             else {
                 alien = new Alien(this, 40, 560);
             }
-
+            alien.play('ufoGlow');
             this.aliensGroup.add(alien, true);
             this.aliensArray.push(alien);
         }
