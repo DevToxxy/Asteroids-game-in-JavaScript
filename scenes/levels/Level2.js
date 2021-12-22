@@ -13,16 +13,6 @@ export default class Level2 extends GenericLevel {
             '/assets/ufo.png',
             { frameWidth: 70, frameHeight: 70 }
         );
-        this.ufo1Text = this.add.text(640 , 15, 'UFO: JESTEŚ SŁABY!!! ', { 
-            fontFamily: 'Impact', color: 'green', fontSize: 16 
-        });
-        this.ufo2Text = this.add.text(100, 550, 'UFO: NIGDY NAS NIE POKONASZ!!! ', { 
-            fontFamily: 'Impact', color: 'green', fontSize: 16 
-        });
-        this.ufo3Text = this.add.text(640, 570, 'UFO: NADCIĄGAMY!!! ', { 
-            fontFamily: 'Impact', color: 'green', fontSize: 16 
-        });
-
     }
 
     create() {
