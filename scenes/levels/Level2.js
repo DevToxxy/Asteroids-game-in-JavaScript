@@ -108,6 +108,9 @@ export default class Level2 extends GenericLevel {
         else {
             this.heartsText.setText('LIVES: ' + this.hearts);
         }   
+        if (this.entities == 0) {
+            this.gameWon();
+        }
 
     }
 

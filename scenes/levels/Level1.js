@@ -3,7 +3,7 @@ import Asteroid from "/asteroid.js";
 
 export default class Level1 extends GenericLevel {
     constructor() {
-        super('Level1', 2, 'Level2')
+        super('Level1', 3, 'Level2')
     }
 
     preload() {
@@ -78,6 +78,9 @@ export default class Level1 extends GenericLevel {
         }
         else {
             this.heartsText.setText('LIVES: ' + this.hearts);
+        }
+        if (this.entities == 0) {
+            this.gameWon();
         }
         asteroid.disableBody(false, true);
         asteroid.anims.play('destroy', true);
