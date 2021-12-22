@@ -8,6 +8,7 @@ export default class Level2 extends GenericLevel {
 
     preload() {
         super.preload()
+        this.load.image('background2', 'assets/background2.png')
         this.load.spritesheet('alien',
             '/assets/ufo.png',
             { frameWidth: 70, frameHeight: 70 }
@@ -16,8 +17,8 @@ export default class Level2 extends GenericLevel {
     }
 
     create() {
+        this.add.image(400,300,'background2')
         super.create()
-
         this.aliensGroup = this.physics.add.group();
         this.aliensArray = [];
         this.aliensGroup.defaults = {};

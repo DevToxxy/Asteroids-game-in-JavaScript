@@ -8,18 +8,26 @@ export default class Level1 extends GenericLevel {
 
     preload() {
         super.preload()
+        this.load.image('background', 'assets/background.png')
         this.load.spritesheet('asteroid',
-            '/assets/asteroid_explosion.png',
-            { frameWidth: 60, frameHeight: 60 }
+            'assets/ast10.png',//'/assets/asteroid_explosion.png',
+            { frameWidth: 64, frameHeight: 64 }
         );
     }
 
     create() {
+        this.add.image(400,300,'background')
         super.create()
-
+        
         this.asteroidsGroup = this.physics.add.group();
         this.asteroidsArray = [];
         this.asteroidsGroup.defaults = {};
+
+        this.anims.create({ key: 'flashaster',
+        frames: this.anims.generateFrameNumbers(
+        'asteroid', { start: 0, end: 3 }),
+        frameRate: 6, repeat: -1
+        });
 
         this.createAsteroidEvent = this.time.addEvent({
             delay: 1500,
@@ -27,14 +35,6 @@ export default class Level1 extends GenericLevel {
             callbackScope: this,
             loop: true
         });
-
-        this.anims.create({ key: 'destroy',
-            frames: this.anims.generateFrameNumbers(
-            'asteroid', { start: 0, end: 3 }),
-            frameRate: 10
-        });
-
-        
 
         this.physics.add.collider(this.asteroidsGroup, this.asteroidsGroup);
         this.physics.add.collider(this.spaceship, this.asteroidsGroup, this.shipAsteroidCollision, null, this);
@@ -65,7 +65,7 @@ export default class Level1 extends GenericLevel {
             else {
                 asteroid = new Asteroid(this, 40, 560);
             }
-
+            asteroid.play('flashaster')
             this.asteroidsGroup.add(asteroid, true);
             this.asteroidsArray.push(asteroid);
         }

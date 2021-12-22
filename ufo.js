@@ -12,13 +12,7 @@ export default class Ufo extends Phaser.Physics.Arcade.Sprite {
 
         this.setVelocity(Math.floor(Math.random() * (300 - -100)) + -100, Math.floor(Math.random() * (300 - -100)) + -100);
         this.setBounce(1);
-<<<<<<< HEAD:ufos.js
-        this.setCollideWorldBounds(true);
-    }   
-}
-=======
 
         // this.setCollideWorldBounds(true);
     }
 }
->>>>>>> master:ufo.js
