@@ -73,14 +73,15 @@ export default class Level1 extends GenericLevel {
 
     shipAsteroidCollision(ship, asteroid) {
         this.hearts--;
+        this.entities--;
         if (this.hearts == 0) {
             this.gameLost();
         }
+        else if (this.entities == 0) {
+            this.gameWon();
+        }
         else {
             this.heartsText.setText('LIVES: ' + this.hearts);
-        }
-        if (this.entities == 0) {
-            this.gameWon();
         }
         asteroid.disableBody(false, true);
         asteroid.anims.play('destroy', true);

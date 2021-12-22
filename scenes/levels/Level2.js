@@ -3,7 +3,7 @@ import Alien from "/alien.js";
 
 export default class Level2 extends GenericLevel {
     constructor() {
-        super('Level2', 12, 'GameWonScene')
+        super('Level2', 4, 'GameWonScene')
     }
 
     preload() {
@@ -105,20 +105,18 @@ export default class Level2 extends GenericLevel {
         if (this.hearts == 0) {
             this.gameLost();
         }
-        else {
-            this.heartsText.setText('LIVES: ' + this.hearts);
-        }   
-        if (this.entities == 0) {
+        else if (this.entities == 0) {
             this.gameWon();
         }
-
+        else {
+            this.heartsText.setText('LIVES: ' + this.hearts);
+        }
     }
 
     bulletAlienCollision(bullet, alien) {
         alien.disableBody(true,true);
         bullet.disableBody(false, true)
         this.entities--;
-        console.log('Entities to eliminate: '+this.entities)
 
         if (this.entities == 0) {
             this.gameWon();
