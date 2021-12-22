@@ -29,7 +29,7 @@ export default class Level2 extends GenericLevel {
         });
 
         this.createAlienEvent = this.time.addEvent({
-            delay: 500,
+            delay: 1500,
             callback: this.createAlien,
             callbackScope: this,
             loop: true
@@ -44,7 +44,7 @@ export default class Level2 extends GenericLevel {
         super.update()
 
         for (let alien of this.aliensArray) {
-            alien.update();
+            alien.update(this.spaceship);
         }
         this.physics.world.wrap(this.aliensGroup, 20);
     }
@@ -78,13 +78,14 @@ export default class Level2 extends GenericLevel {
         }
         else {
             this.heartsText.setText('LIVES: ' + this.hearts);
-        }
+        }   
     }
 
     bulletAlienCollision(bullet, alien) {
-        alien.disableBody(true, true);
-        bullet.disableBody(true, true)
+        alien.disableBody(true,true);
+        bullet.disableBody(false, true)
         this.entities--;
+        console.log('Entities to eliminate: '+this.entities)
 
         if (this.entities == 0) {
             this.gameWon();
