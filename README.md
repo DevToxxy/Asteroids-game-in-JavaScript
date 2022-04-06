@@ -1,1 +1,1 @@
-Game in javascript based on Atari game - asteroids
+Game written in javascript based on an Atari old school title - Asteroids
